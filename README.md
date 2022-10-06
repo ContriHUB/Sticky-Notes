@@ -11,9 +11,6 @@ open the terminal/command prompt at the location where you want to setup the pro
 
 use the following commands in the terminal or command prompt:
 
-```shell
-git clone https://github.com/ContriHUB/Sticky-Notes.git
-
 ### Prerequisites
 * Install MongoDb Compass
 * Make a .env file inside Sticky_Notes Folder
@@ -22,6 +19,9 @@ git clone https://github.com/ContriHUB/Sticky-Notes.git
                     otherwise create a cluster in Mongodb Atlas and paste the mongo uri in the value field
 
     - JWT_SECRET = "Any_Sectret_Key_of_Your_Choice"
+
+```shell
+git clone https://github.com/ContriHUB/Sticky-Notes.git
 
 cd Sticky-Notes
 
