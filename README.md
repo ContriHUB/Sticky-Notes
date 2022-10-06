@@ -41,7 +41,6 @@ do `npm run dev` to start the project
 5. Create a PR with your changes and a detailed description of the changes you have made.
 6. Submit the PR link on the ContriHUB website.
 
-Read the [CONTRIBUTING](CONTRIBUTING.md) guide.
 For major changes, please open an issue first to discuss what you would like to change.
 
 ## NOTE:
