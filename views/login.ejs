@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://user-images.githubusercontent.com/65178804/193461227-d3638ae9-cfd9-413a-ac72-a9361dae11b0.png">
+    <title>Sticky-Notes Login</title>
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+*{
+    box-sizing: border-box;
+}
+:root {
+    --red: hsl(236, 56%, 90%) ;
+    --green: hsl(154, 59%, 51%);
+    --blue: hsl(248, 32%, 49%);
+    --grey: hsl(246, 25%, 77%);
+    --dark: hsl(249, 10%, 26%);
+    --bodyCopy: 16px;
+    --regular: 400;
+    --bold: 700;
+    --radius: 10px;
+}
+html,body{
+    font-family: 'Poppins',Arial, sans-serif;
+    background-color: var(--red);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    color: var(--dark);
+}
+body{
+    background-image: url('https://user-images.githubusercontent.com/65178804/193461526-753fd5dc-fa85-4398-b667-25feea58a741.png');
+    
+    font-size: var(--bodyCopy);
+}
+main{
+    display: flex;
+    /* width: 100%; */
+    max-width: 110ch;
+    min-height: 95vh;
+    margin: 0 auto;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+header,form >p:first-of-type,input[type=submit]{
+    color: rgb(9, 45, 84);
+}
+form,header{
+    flex-basis:0;
+    flex-grow: 1;
+}
+h1{
+    font-size: clamp(1.5rem, 5vw, 3rem);
+}
+a{
+    font-weight: bold;
+    color: var(--red);
+    text-decoration: none;
+}
+form >p:first-of-type{
+    background-color: var(--blue);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+}
+form div, form >p:first-of-type{
+    box-shadow: 0px 7px 0px rgba(0,0,0,0.2);
+}
+input{
+    display: block;
+    width: 100%;
+    margin: 1rem 0 .5rem 0;
+    padding: 1rem;
+    border: solid 1px var(--grey);
+    border-radius: calc(var(--radius)/2);
+    font-weight: var(--bold);
+    outline: none;
+}
+input[type=submit]{
+    background-color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    cursor: pointer;
+    font-size: medium;
+    box-shadow: inset 0px -4px rgba(0,0,0,0.1);
+    transition: all .2s ease-in-out;
+}
+input[type=submit]:hover{
+    box-shadow: inset 0px -6px rgba(0,0,0,0.1);
+}
+.attribution,#formPad p:last-of-type,.errMsg {
+    font-size: x-small;
+    text-align: center;
+}
+.errMsg{
+    text-align: right;
+    color: var(--red);
+    font-size: x-small;
+    font-style: italic;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+}
+.attribution a {
+    color: var(--blue);
+}
+#formPad{
+    background-color: white;
+    border-radius: var(--radius);
+    padding: 2.5rem;
+}
+@media screen and (max-width:660px) {
+    body{
+        background-image: url('https://user-images.githubusercontent.com/65178804/193461526-753fd5dc-fa85-4398-b667-25feea58a741.png');
+    }
+    main{
+        flex-direction: column;
+    }
+    header{text-align: center;}
+}
+    </style>
+</head>
+<body>
+    
+
+
+
+
+<body>
+    <main>
+      <header>
+        <h1>Sticky-Notes </h1>
+        <p>
+            "One place for all your Todos !!" 
+        </p>
+
+      </header>
+      <form id="myForm">
+       
+     
+         
+        
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            required
+          />
+         
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+       
+          <input type="submit"  value="Login" id="submit"  />
+          
+          <p>
+             
+           <a href="/signup">Signup</a>
+         </p>
+          
+     
+
+      </form>
+    </main>
+
+    
+    <script>
+  document.getElementById("myForm").addEventListener("submit", (e)=>{
+    e.preventDefault();
+  
+     let email = document.getElementById("email").value;
+     let password = document.getElementById("password").value;
+     fetch("/api/auth/login", {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email, password})}).then((res)=>{
+        // console.log(res.auth_token);
+        return res.json()
+     }).then((fres)=>{
+        console.log(fres.auth_token);
+        
+          if(fres.error)
+          {
+            alert(fres.error);
+          }
+          else
+          {
+              window.location.href = "/api/auth/console";
+          }
+     })
+  })
+
+        </script>
+  </body>
+</html>
