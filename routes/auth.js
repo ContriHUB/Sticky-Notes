@@ -38,6 +38,7 @@ router.post(
         return res.status(400).json({
           success: false,
           message: "This email is already in use,Try signing in",
+          error: "This Email is already in use!Try signing in",
         });
       }
 
