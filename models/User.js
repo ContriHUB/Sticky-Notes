@@ -20,6 +20,19 @@ const UserSchema = new Schema({
   },
 });
 
+//method to check email duplication
+UserSchema.statics.emailAlreadyInUse = async function(email){
+  if(!email) throw new Error('Invalid Email')
+   try {
+   const user = await this.findOne({email})
+   if(user)return false
+   return true;
+  } catch (error) {
+   console.log('Error: emailAlreadyInUse method', error.message)
+   return false
+  }
+ }
+
 const User = mongoose.model("user", UserSchema);
 // User.createIndexes();
 

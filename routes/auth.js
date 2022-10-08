@@ -32,10 +32,14 @@ router.post(
 
     //check whether email is unique
     try {
-      // let user = await User.findOne({ email: req.body.email });
-      // if (user) {
-      //   return res.status(400).json({ error: "Email already exists😕" });
-      // }
+      let isNewUser = await User.emailAlreadyInUse(req.body.email);
+      if(!isNewUser){
+        console.log("Duplicate USER!!");
+        return res.status(400).json({
+          success: false,
+          message: "This email is already in use,Try signing in",
+        });
+      }
 
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, salt);
