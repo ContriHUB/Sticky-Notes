@@ -18,7 +18,7 @@ use the following commands in the terminal or command prompt:
     - MONGO_URI = mongodb://localhost:27017 if you have Mongodb Compass Installed and run the local instance inside mongodb compass as well
                     otherwise create a cluster in Mongodb Atlas and paste the mongo uri in the value field
 
-    - JWT_SECRET = "Any_Sectret_Key_of_Your_Choice"
+    - JWT_SECRET = "Any_Secret_Key_of_Your_Choice"
 
 ```shell
 git clone https://github.com/ContriHUB/Sticky-Notes.git
