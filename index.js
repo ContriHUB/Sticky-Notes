@@ -18,7 +18,7 @@ app.use(express.static(__dirname + "/public"));
 // app.use(expressLayout);
 app.set("view engine", "ejs");
 
-const port = 5001;
+const port = 3000;
 
 //Available Routes
 app.use("/api/auth", require("./routes/auth"));

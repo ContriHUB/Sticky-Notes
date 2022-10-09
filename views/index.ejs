@@ -280,8 +280,8 @@
                 tags = document.getElementById("exampleModalTags").value;
                 
                 fetch(`/api/notes/updatenote/${target_element}`, {
-                method: "POST",
-                
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title, description, tags }),
                 })
                 .then((res) => {
@@ -293,8 +293,8 @@
 
                     if (fres.error) {
                     alert(fres.error);
+                    window.location.href = "/api/auth/console";
                     } else {
-                        
                     window.location.href = "/api/auth/console";
                     }
                 });
