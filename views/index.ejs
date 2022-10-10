@@ -99,6 +99,27 @@
     </div>
 
     <div class="container my-3">
+      <div class="d-md-flex">
+        <div class="input-group my-3">
+          <input type="search" class="form-control rounded search-text" placeholder="Search by" />
+          <button type="button" class="btn btn-outline-primary search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="input-group my-3 d-md-none">
+          <select class="form-control search-type">
+            <option value="title" selected>Title</option>
+            <option value="tag">Tag</option>
+          </select>
+        </div>
+        <div class="input-group my-3 w-25 d-none d-md-flex">
+          <select class="form-control search-type">
+            <option value="title" selected>Title</option>
+            <option value="tag">Tag</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-3">
       <div class="row my-3">
         <% notes.forEach(function(note){ %>
         <div class="col-sm-4 my-3">
