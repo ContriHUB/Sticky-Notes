@@ -64,6 +64,12 @@ router.post(
       }
       console.log(email);
       const userToSend = await User.findOne({ email: email });
+      const currentUserId = req.user.id;
+      if(userToSend.id==currentUserId){
+        return res.json({
+          error: "Do not send to yourself!",
+        })
+      }
       console.log(userToSend);
 
       const note = new Notes({
