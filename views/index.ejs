@@ -101,17 +101,16 @@
     <div class="container my-3">
       <div class="d-md-flex">
         <div class="input-group my-3">
-          <input type="search" class="form-control rounded search-text" placeholder="Search by" />
-          <button type="button" class="btn btn-outline-primary" onclick="filterNotes(event);"><i class="fas fa-search"></i></button>
+          <input type="text" class="form-control rounded search-text" placeholder="Search by" onkeyup="filterNotes();" />
         </div>
         <div class="input-group my-3 d-md-none">
-          <select class="form-control search-type">
+          <select class="form-control search-type" onchange="filterNotes();">
             <option value="title" selected>Title</option>
             <option value="tag">Tag</option>
           </select>
         </div>
         <div class="input-group my-3 w-25 d-none d-md-flex">
-          <select class="form-control search-type">
+          <select class="form-control search-type" onchange="filterNotes();">
             <option value="title" selected>Title</option>
             <option value="tag">Tag</option>
           </select>
@@ -412,10 +411,8 @@
         }
 
 
-        function filterNotes(e)
+        function filterNotes()
         {
-          e.preventDefault();
-
           let text = document.querySelector('.search-text').value;
           let type;
           for (const dropdown of document.querySelectorAll('.search-type'))
@@ -426,7 +423,7 @@
             if (text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && note.querySelector('.note-tag').innerText.indexOf(text) !== -1))
               note.style.display = 'block';
             else
-              note.style.display = 'none', console.log('fwf');
+              note.style.display = 'none';
         }
       
 
