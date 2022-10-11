@@ -42,12 +42,25 @@
       tr:nth-child(even) {
         background-color: #dddddd;
       }
-
+      .card {
+        overflow: hidden;
+      }
       .card-text {
         /* background-color: blue; */
-        max-height: 180px;
-        overflow-y: hidden;
+        height: 68px;
       }
+
+      .modal-txt-area {
+        display: block;
+        resize: none;
+        min-height: 100px !important;
+        overflow: inherit !important;
+      }
+      .full_note{
+        overflow: hidden !important;
+
+      }
+
    
     </style>
   </head>
@@ -55,7 +68,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#"
-          ><img
+          ><img 
             src="https://user-images.githubusercontent.com/65178804/193474123-e8b213f0-ead6-4528-808b-d9cb3f57f856.png"
             width="40px"
         /></a>
@@ -115,14 +128,14 @@
               </h5>
               <div class="card-body">
                 <% var len = note.description.length %>
-                <p class="card-text" id="cardDescription_<%= note._id %>">
-                  <% if(len <= 100){ %>
-                    <%= note.description %>
-                  <% } else{ %>  
-                    <%= note.description.slice(0,100)%>
-                    <button class="btn-primary" onclick="showMore(`cardDescription_<%= note._id%>`)"  data-bs-toggle="modal" data-bs-target="#exampleModal4" >Show more...</button>
-                  <% } %>
+                
+                <p class="full_note card-text" id="cardDescription_<%= note._id %>">
+                  <%= note.description %>
                 </p>
+                <% if(len > 90){ %>
+                  <a href="#" onclick="showMore(`cardDescription_<%= note._id%>`)" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#exampleModal4" >Show more</a>
+                <% } %> 
+                  <br>
                 <p class="card-text" id="cardTags_<%= note._id %>">
                   <%= note.tags %>
                 </p>
@@ -154,7 +167,7 @@
             <form>
               <div class="mb-3">
                 <label for="exampleModalDescription2" class="col-form-label">Description:</label>
-                <textarea type="text" class="form-control" id="exampleModalDescription4" rows="10" disabled></textarea>
+                <textarea type="text" class="form-control modal-txt-area" id="exampleModalDescription4" disabled></textarea>
               </div>
               <div class="mb-3">
                 <label for="exampleModalTags2" class="col-form-label">Tags:</label>
@@ -301,7 +314,7 @@
         })
    
         function showMore(id) {
-          // console.log(event.srcElement);
+          console.log(event.srcElement);
             target_element = id.substring(16);
             console.log(target_element);
 
