@@ -102,7 +102,7 @@
       <div class="d-md-flex">
         <div class="input-group my-3">
           <input type="search" class="form-control rounded search-text" placeholder="Search by" />
-          <button type="button" class="btn btn-outline-primary search-btn"><i class="fas fa-search"></i></button>
+          <button type="button" class="btn btn-outline-primary" onclick="filterNotes(event);"><i class="fas fa-search"></i></button>
         </div>
         <div class="input-group my-3 d-md-none">
           <select class="form-control search-type">
@@ -122,16 +122,16 @@
     <div class="container my-3">
       <div class="row my-3">
         <% notes.forEach(function(note){ %>
-        <div class="col-sm-4 my-3">
+        <div class="col-sm-4 my-3 note">
           <div class="card">
-            <h5 class="card-title card-header" id="cardTitle_<%= note._id %>">
+            <h5 class="card-title card-header note-title" id="cardTitle_<%= note._id %>">
               <%= note.title %>
             </h5>
             <div class="card-body">
               <p class="card-text" id="cardDescription_<%= note._id %>">
                 <%= note.description %>
               </p>
-              <p class="card-text" id="cardTags_<%= note._id %>">
+              <p class="card-text note-tag" id="cardTags_<%= note._id %>">
                 <%= note.tags %>
               </p>
               <a href="#" style="padding-right: 10px"
@@ -409,6 +409,24 @@
             // target_element = "";
             // old_title = "", old_description = "", old_tags = "";
 
+        }
+
+
+        function filterNotes(e)
+        {
+          e.preventDefault();
+
+          let text = document.querySelector('.search-text').value;
+          let type;
+          for (const dropdown of document.querySelectorAll('.search-type'))
+            if (dropdown.style.display !== 'none')
+              type = dropdown.value;
+
+          for (const note of document.querySelectorAll('.note'))
+            if (text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && note.querySelector('.note-tag').innerText.indexOf(text) !== -1))
+              note.style.display = 'block';
+            else
+              note.style.display = 'none', console.log('fwf');
         }
       
 
