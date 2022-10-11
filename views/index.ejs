@@ -103,14 +103,14 @@
         <div class="input-group my-3">
           <input type="text" class="form-control rounded search-text" placeholder="Search" onkeyup="filterNotes();" />
         </div>
-        <div class="input-group my-3 d-md-none">
-          <select class="form-control search-type" onchange="filterNotes();">
+        <div class="input-group my-3 d-md-none search-type">
+          <select class="form-control" onchange="filterNotes();">
             <option value="title" selected>By Title</option>
             <option value="tag">By Tag</option>
           </select>
         </div>
-        <div class="input-group my-3 w-25 d-none d-md-flex">
-          <select class="form-control search-type" onchange="filterNotes();">
+        <div class="input-group my-3 w-25 d-none d-md-flex search-type">
+          <select class="form-control" onchange="filterNotes();">
             <option value="title" selected>By Title</option>
             <option value="tag">By Tag</option>
           </select>
@@ -411,13 +411,19 @@
         }
 
 
+        function isVisible(e)
+        {
+          return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+        }
+
+
         function filterNotes()
         {
           let text = document.querySelector('.search-text').value;
           let type;
           for (const dropdown of document.querySelectorAll('.search-type'))
-            if (dropdown.style.display !== 'none')
-              type = dropdown.value;
+            if (isVisible(dropdown))
+              type = dropdown.querySelector('select').value;
 
           for (const note of document.querySelectorAll('.note'))
             if (text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && note.querySelector('.note-tag').innerText.indexOf(text) !== -1))
