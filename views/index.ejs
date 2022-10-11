@@ -424,6 +424,9 @@
           for (const dropdown of document.querySelectorAll('.search-type'))
             if (isVisible(dropdown))
               type = dropdown.querySelector('select').value;
+          
+          for (const dropdown of document.querySelectorAll('.search-type'))
+            dropdown.querySelector('select').value = type;
 
           for (const note of document.querySelectorAll('.note'))
             if (text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && note.querySelector('.note-tag').innerText.indexOf(text) !== -1))
