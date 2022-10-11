@@ -417,22 +417,45 @@
         }
 
 
+        function kmp(haystack, needle) 
+        {
+          if (needle === '' || needle === haystack) return 0;
+          if (haystack.length < needle.length) return -1;
+          
+          for (let i = 0; i < haystack.length - needle.length + 1; i++) {
+            if (haystack[i] === needle[0]) {
+              for (let j = 0; j < needle.length; j++) {
+                if (needle[j] !== haystack[i + j]) {
+                  break;
+                } else if (j === needle.length - 1){
+                  return i;
+                }
+              }
+            }
+          }
+          
+          return -1;
+        };
+
+
         function filterNotes()
         {
-          let text = document.querySelector('.search-text').value;
+          let text = document.querySelector('.search-text').value.trim();
           let type;
           for (const dropdown of document.querySelectorAll('.search-type'))
             if (isVisible(dropdown))
               type = dropdown.querySelector('select').value;
+          console.log(text, type)
           
           for (const dropdown of document.querySelectorAll('.search-type'))
             dropdown.querySelector('select').value = type;
 
           for (const note of document.querySelectorAll('.note'))
-            if (text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && note.querySelector('.note-tag').innerText.indexOf(text) !== -1))
-              note.style.display = 'block';
-            else
+          {
+            note.style.display = 'block';
+            if (!(text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && kmp(note.querySelector('.note-tag').innerText, text) !== -1)))
               note.style.display = 'none';
+          }
         }
       
 
