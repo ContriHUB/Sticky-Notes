@@ -42,6 +42,13 @@
       tr:nth-child(even) {
         background-color: #dddddd;
       }
+
+      .card-text {
+        /* background-color: blue; */
+        max-height: 180px;
+        overflow-y: hidden;
+      }
+   
     </style>
   </head>
   <body>
@@ -101,18 +108,24 @@
     <div class="container my-3">
       <div class="row my-3">
         <% notes.forEach(function(note){ %>
-        <div class="col-sm-4 my-3">
-          <div class="card">
-            <h5 class="card-title card-header" id="cardTitle_<%= note._id %>">
-              <%= note.title %>
-            </h5>
-            <div class="card-body">
-              <p class="card-text" id="cardDescription_<%= note._id %>">
-                <%= note.description %>
-              </p>
-              <p class="card-text" id="cardTags_<%= note._id %>">
-                <%= note.tags %>
-              </p>
+          <div class="col-sm-4 my-3">
+            <div class="card">
+              <h5 class="card-title card-header" id="cardTitle_<%= note._id %>">
+                <%= note.title %>
+              </h5>
+              <div class="card-body">
+                <% var len = note.description.length %>
+                <p class="card-text" id="cardDescription_<%= note._id %>">
+                  <% if(len <= 100){ %>
+                    <%= note.description %>
+                  <% } else{ %>  
+                    <%= note.description.slice(0,100)%>
+                    <button class="btn-primary" onclick="showMore(`cardDescription_<%= note._id%>`)"  data-bs-toggle="modal" data-bs-target="#exampleModal4" >Show more...</button>
+                  <% } %>
+                </p>
+                <p class="card-text" id="cardTags_<%= note._id %>">
+                  <%= note.tags %>
+                </p>
               <a href="#" style="padding-right: 10px"
                 ><i class="fa fa-edit" id="edit_<%= note._id %>" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="updateNote()"></i
               ></a>
@@ -129,7 +142,33 @@
         <% }); %>
       </div>
     </div>
-
+<!-- modal for full note description -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalTitle4"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+           <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="exampleModalDescription2" class="col-form-label">Description:</label>
+                <textarea type="text" class="form-control" id="exampleModalDescription4" rows="10" disabled></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="exampleModalTags2" class="col-form-label">Tags:</label>
+                <input class="form-control" id="exampleModalTags4" disabled>
+              </div>
+               
+            </form>
+          </div>
+            
+         
+        </div>
+      </div>
+    </div>
+    
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
@@ -261,6 +300,21 @@
           });
         })
    
+        function showMore(id) {
+          // console.log(event.srcElement);
+            target_element = id.substring(16);
+            console.log(target_element);
+
+            old_title = document.getElementById(`cardTitle_${target_element}`);
+            old_description = document.getElementById(`cardDescription_${target_element}`);
+            old_tags = document.getElementById(`cardTags_${target_element}`);
+            console.log(title.innerText);
+            document.getElementById("ModalTitle4").innerText = old_title.innerText;
+            document.getElementById("exampleModalDescription4").value = old_description.innerText;
+            document.getElementById("exampleModalTags4").value = old_tags.innerText;
+        }
+
+        
         function updateNote(){
             console.log(event.srcElement.id);
             target_element = event.srcElement.id.substring(5);
