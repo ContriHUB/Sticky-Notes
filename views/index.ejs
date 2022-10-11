@@ -47,7 +47,8 @@
       }
       .card-text {
         /* background-color: blue; */
-        height: 68px;
+        height: 54px;
+        margin-bottom: 0rem;
       }
 
       .modal-txt-area {
@@ -130,13 +131,14 @@
                 <% var len = note.description.length %>
                 
                 <p class="full_note card-text" id="cardDescription_<%= note._id %>">
+
                   <%= note.description %>
                 </p>
                 <% if(len > 90){ %>
                   <a href="#" onclick="showMore(`cardDescription_<%= note._id%>`)" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#exampleModal4" >Show more</a>
                 <% } %> 
                   <br>
-                <p class="card-text" id="cardTags_<%= note._id %>">
+                <p class="card-text" id="cardTags_<%= note._id %>" style="margin-top: 20px;">
                   <%= note.tags %>
                 </p>
               <a href="#" style="padding-right: 10px"
