@@ -99,18 +99,38 @@
     </div>
 
     <div class="container my-3">
+      <div class="d-md-flex">
+        <div class="input-group my-3">
+          <input type="text" class="form-control rounded search-text" placeholder="Search" onkeyup="filterNotes();" />
+        </div>
+        <div class="input-group my-3 d-md-none search-type">
+          <select class="form-control" onchange="filterNotes();">
+            <option value="title" selected>By Title</option>
+            <option value="tag">By Tag</option>
+          </select>
+        </div>
+        <div class="input-group my-3 w-25 d-none d-md-flex search-type">
+          <select class="form-control" onchange="filterNotes();">
+            <option value="title" selected>By Title</option>
+            <option value="tag">By Tag</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-3">
       <div class="row my-3">
         <% notes.forEach(function(note){ %>
-        <div class="col-sm-4 my-3">
+        <div class="col-sm-4 my-3 note">
           <div class="card">
-            <h5 class="card-title card-header" id="cardTitle_<%= note._id %>">
+            <h5 class="card-title card-header note-title" id="cardTitle_<%= note._id %>">
               <%= note.title %>
             </h5>
             <div class="card-body">
               <p class="card-text" id="cardDescription_<%= note._id %>">
                 <%= note.description %>
               </p>
-              <p class="card-text" id="cardTags_<%= note._id %>">
+              <p class="card-text note-tag" id="cardTags_<%= note._id %>">
                 <%= note.tags %>
               </p>
               <a href="#" style="padding-right: 10px"
@@ -388,6 +408,58 @@
             // target_element = "";
             // old_title = "", old_description = "", old_tags = "";
 
+        }
+
+
+        function isVisible(e)
+        {
+          return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+        }
+
+
+        function kmp(haystack, needle) 
+        {
+          if (needle === '' || needle === haystack) return 0;
+          if (haystack.length < needle.length) return -1;
+          
+          for (let i = 0; i < haystack.length - needle.length + 1; i++) {
+            if (haystack[i] === needle[0]) {
+              for (let j = 0; j < needle.length; j++) {
+                if (needle[j] !== haystack[i + j]) {
+                  break;
+                } else if (j === needle.length - 1){
+                  return i;
+                }
+              }
+            }
+          }
+          
+          return -1;
+        };
+
+
+        function filterNotes()
+        {
+          let text = document.querySelector('.search-text').value.trim();
+          
+          let type;
+          for (const dropdown of document.querySelectorAll('.search-type'))
+            if (isVisible(dropdown))
+              type = dropdown.querySelector('select').value;
+          console.log(text, type)
+          
+          for (const dropdown of document.querySelectorAll('.search-type'))
+            dropdown.querySelector('select').value = type;
+
+          for (const note of document.querySelectorAll('.note'))
+          {
+            note.style.display = 'block';
+            let noteTitle = note.querySelector('.note-title').innerText.toLowerCase();
+            let noteTag = note.querySelector('.note-tag').innerText.toLowerCase();
+            text = text.toLowerCase();
+            if (!(text === '' || (type === 'title' && noteTitle.startsWith(text)) || (type === 'tag' && kmp(noteTag, text) !== -1)))
+              note.style.display = 'none';
+          }
         }
       
 
