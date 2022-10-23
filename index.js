@@ -4,6 +4,7 @@ const path = require("path");
 const expressLayout = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
 const cookie = require("cookie-parser");
+const redirectToHomeIfLoggedIn = require("./middleware/redirectToHomeIfLoggedIn");
 
 connectToMongo();
 
@@ -26,7 +27,7 @@ app.use("/api/notes", require("./routes/notes"));
 
 //Routes
 
-app.get("/login", (req, res) => {
+app.get("/login", redirectToHomeIfLoggedIn, (req, res) => {
   res.render("login");
 });
 
