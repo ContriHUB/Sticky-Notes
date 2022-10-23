@@ -441,6 +441,7 @@
         function filterNotes()
         {
           let text = document.querySelector('.search-text').value.trim();
+          
           let type;
           for (const dropdown of document.querySelectorAll('.search-type'))
             if (isVisible(dropdown))
@@ -453,7 +454,10 @@
           for (const note of document.querySelectorAll('.note'))
           {
             note.style.display = 'block';
-            if (!(text === '' || (type === 'title' && note.querySelector('.note-title').innerText.startsWith(text)) || (type === 'tag' && kmp(note.querySelector('.note-tag').innerText, text) !== -1)))
+            let noteTitle = note.querySelector('.note-title').innerText.toLowerCase();
+            let noteTag = note.querySelector('.note-tag').innerText.toLowerCase();
+            text = text.toLowerCase();
+            if (!(text === '' || (type === 'title' && noteTitle.startsWith(text)) || (type === 'tag' && kmp(noteTag, text) !== -1)))
               note.style.display = 'none';
           }
         }
