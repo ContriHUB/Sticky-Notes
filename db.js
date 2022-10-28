@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-dotenv.config({ path: "./.env" });
+// below statement is not working but using the name of configuratin file it works
+// dotenv.config({ path: "./.env" });
+dotenv.config({ path: "config.env" });
 
 const connectToMongo = () => {
   mongoose

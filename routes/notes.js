@@ -13,7 +13,7 @@ router.post(
   "/addnote",
   fetchuser,
   [
-    body("title", "Enter a valid title").isLength({ min: 3 }),
+    body("title", "Enter a valid title of atleast 3 characters").isLength({ min: 3 }),
     body("description", "Description must be atleast 5 characters").isLength({
       min: 5,
     }),
@@ -26,7 +26,7 @@ router.post(
       //if error found return bad request and error
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ error: errors.array() });
       }
 
       const note = new Notes({
@@ -38,7 +38,7 @@ router.post(
 
       const savedNotes = await note.save();
 
-      res.json(savedNotes);
+      res.status(200).json({ success: "Note Added successfully", savedNotes });
     } catch (err) {
       console.log(err.message);
       res
