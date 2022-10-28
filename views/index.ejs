@@ -272,10 +272,14 @@
           .then((fres) => {
             console.log(fres);
 
-            if (fres.error) {
-
-              alert(fres.error);
-            } else {
+            if(fres.error) {
+              // console.log(fres.error)
+              if(fres.error[0].param==="title") {
+                alert(fres.error[0].msg + ". Note not saved")
+              }
+            } else if(fres.success) {
+              alert(fres.success);
+              // console.log(fres.savedNotes)
               window.location.href = "/api/auth/console";
             }
           });
