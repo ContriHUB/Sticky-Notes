@@ -10,7 +10,6 @@ const dotenv = require("dotenv");
 const fetchuser = require("../middleware/fetchuser");
 const UserCtrl = require("../controllers/userCtrl");
 const cookie = require("cookie-parser");
-const nocache = require("../middleware/noCache")
 
 dotenv.config({ path: "./.env" });
 // dotenv.config({ path: "config.env" });
@@ -139,7 +138,7 @@ router.post("/getuser", fetchuser, async (req, res) => {
 
 
 // added nocache middleware which indicates that the page will not be cached in browser history
-router.get("/console", [fetchuser, nocache], async (req, res) => {
+router.get("/console", fetchuser, async (req, res) => {
   const userId = req.user.id;
   let user = await User.findById(userId).select("-password");
   const notes = await Notes.find({ user: userId });
@@ -152,7 +151,6 @@ router.get("/console", [fetchuser, nocache], async (req, res) => {
 
 router.get("/signout", async (req, res) => {
   // added clearCookie function so that logged in user details are cleared from cookies when user logout
-  // but only using this one doesn't remove the cached page from the browser history and thus we need to remove the cached page also
   res.clearCookie("auth-token");
   res.redirect("/login");
 });
