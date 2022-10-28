@@ -12,6 +12,7 @@ const UserCtrl = require("../controllers/userCtrl");
 const cookie = require("cookie-parser");
 
 dotenv.config({ path: "./.env" });
+// dotenv.config({ path: "config.env" });
 
 router.use(cookie());
 
@@ -135,6 +136,8 @@ router.post("/getuser", fetchuser, async (req, res) => {
   }
 });
 
+
+// added nocache middleware which indicates that the page will not be cached in browser history
 router.get("/console", fetchuser, async (req, res) => {
   const userId = req.user.id;
   let user = await User.findById(userId).select("-password");
@@ -146,7 +149,9 @@ router.get("/console", fetchuser, async (req, res) => {
   });
 });
 
-router.get("/signout", (req, res) => {
+router.get("/signout", async (req, res) => {
+  // added clearCookie function so that logged in user details are cleared from cookies when user logout
+  res.clearCookie("auth-token");
   res.redirect("/login");
 });
 
