@@ -167,7 +167,7 @@
           </div>
             <div class="mb-3">
             <label for="exampleModalEmail" class="col-form-label">Send To:</label>
-            <input type="text" class="form-control" id="exampleModalEmail">
+            <input type="text" class="form-control" id="exampleModalEmail" placeholder="Enter email of user you want to send note to">
           </div>
         </form>
       </div>
@@ -351,7 +351,18 @@
                 })
                 .then((res) => {
                     // console.log(res.auth_token);
-                    return res.json();
+                    if (res.status === 404) // If user with given email doesn't exist
+                    {
+                      alert("User with given email doesn't exist!");
+                      window.location.href = "/api/auth/console";
+                    }
+                    else if (res.status === 400) // If given email is not a proper email
+                    {
+                      alert("Please enter a proper email!");
+                      window.location.href = "/api/auth/console";
+                    }
+                    else
+                      return res.json();
                 })
                 .then((fres) => {
                     console.log(fres);

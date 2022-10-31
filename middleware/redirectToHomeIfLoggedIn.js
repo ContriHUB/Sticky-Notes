@@ -7,7 +7,7 @@ const redirectToHomeIfLoggedIn = (req, res, next) => {
   //Get user details from the jwt-token and add id to req object(body)
   const token = req.cookies["auth-token"];
   if (!token) {
-    return res.redirect("/login");
+    next();
   }
   
   // Checking if we are able to get user details, this means that user is already logged in

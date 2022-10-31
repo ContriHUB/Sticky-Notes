@@ -147,6 +147,7 @@ router.get("/console", fetchuser, async (req, res) => {
 });
 
 router.get("/signout", (req, res) => {
+  res.clearCookie("auth-token");
   res.redirect("/login");
 });
 

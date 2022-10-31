@@ -63,7 +63,15 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
       console.log(email);
+
       const userToSend = await User.findOne({ email: email });
+      if (userToSend === null)
+      {
+        return res.status(404).json({
+          error: "User with given email doesn't exist!",
+        })
+      }
+
       const currentUserId = req.user.id;
       if(userToSend.id==currentUserId){
         return res.json({
