@@ -27,7 +27,7 @@ app.use("/api/notes", require("./routes/notes"));
 
 //Routes
 
-app.get("/login", redirectToHomeIfLoggedIn, (req, res) => {
+app.get("/login", (req, res) => {
   res.render("login");
 });
 
